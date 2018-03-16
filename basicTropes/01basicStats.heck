@@ -24,7 +24,7 @@ namespace basicTropes
                 
         pola opcjonalne, może być default i brak klucza, może być klucz i brak defaulta
         descriptionKey = "agility";
-        defaultDescription = "bla bla bla bla cośtam opis
+        defaultDescription = "bla bla bla bla cośtam opis\
                               taki normalnie jak w książce, docelowo do umieszczenia w\
                               osobnym zbiorze tekstów pod kluczem z namespace.descriptionKey";               
         shortDescription = "No, zręczność.";
