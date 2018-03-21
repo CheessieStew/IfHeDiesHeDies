@@ -1,0 +1,9 @@
+{
+    "antlr4.referencesCodeLens.enabled" : true,
+    "antlr4.atn": {
+        "saveDir": "atn",
+        "maxLabelCount": 3
+    },
+    "antlr4.generation.mode": "internal",
+    "antlr4.generation.language": "c#"
+}

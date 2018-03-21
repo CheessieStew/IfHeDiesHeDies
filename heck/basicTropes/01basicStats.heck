@@ -1,0 +1,93 @@
+//oto skrypt heckowy, który deklaruje kilka podstawowych elementów systemu
+//generalnie, większość podstawowych rzeczy zdefiniowanych jest poza heckiem
+//np. schematy przebiegu walk etc.
+//tutaj piszemy głównie parametryzacje postaci, skille i takie tam
+
+//jest to język definiowania obiektów, w gruncie rzeczy
+//obiektów, które umieją liczyć, lub wskazać czytelnikowi UI-a na sąsiada w grafie zależności
+
+//no i jakoś się powinno dać wygenerować podręcznik z opisów i wzorów w tych skryptach
+//ale to na razie olał
+
+
+//najpierw otwórzmy namespace
+//jego nazwa z punktu widzenia kodu to heck, ale do tego ma domyślny tytuł (do zmiany w lang packu czy coś)
+namespace heck "Najbardziej core jak się da"
+{
+    //teraz piszemy dział "Najbardziej core jak się da" podręcznika
+    //i coś takiego powiedzmy:
+    defaultSummary = "wstęp do rozdziału czy coś"
+
+    //różne elementy systemu deklaruje się odpowiednimi keywordami
+
+    //tu definiujemy statystykę "zręczność", którą posiadać będą wszystkie postaci
+    //jej nazwa z punktu widzenia kodu to agility, ale do tego ma domyślną nazwę podręcznikową
+    character base statistic agility "Zręczność" alias zrecznosc, zr, ag
+    {
+        //te wszystkie rzeczy to jakby pola klasy "statistic", której instancję definiujemy
+        //to, jakie pola ma ta klasa definiuje język, my je tu tylko wypełniamy
+        
+        minBaseValue = 0;
+        startBaseValue = 5;
+        incrementCost = 100;
+        incrementStep = 1;
+                
+        //defaultowe opisy/summary są opcjonalne, będzie można je definiować pod odpowiednimi kluczami w osobnym pliku
+        defaultDescription = "bla bla bla bla cośtam opis\
+                              taki normalnie jak w książce, docelowo do umieszczenia w\
+                              osobnym zbiorze tekstów pod odpowiednim kluczem";               
+        shortDescription = "No, zręczność.";
+    }
+
+    //podobnie definiujemy inne statystyki
+    //tu może wspomnę o pomyśle na aliasy - można potem gdzieś napisać:
+    //add alias strength fuerza
+    //i dodać alias hiszpański jakby ktoś chciał pisać mody po hiszpańsku :D
+
+    character base statistic strength "Siła" alias sila, s
+    {
+        minBaseValue = 0;
+        startBaseValue = 5;
+        incrementCost = 100;
+        incrementStep = 1;        
+        
+        defaultDescription = "bla bla bla bla cośtam opis\
+                              taki normalnie jak w książce, docelowo do umieszczenia w\
+                              osobnym zbiorze tekstów pod odpowiednim kluczem";               
+        shortDescription = "No, siła.";
+    }
+
+    character base statistic toughness "Odporność" alias t, odp
+    {
+        minBaseValue = 0;
+        startBaseValue = 5;
+        incrementCost = 100;
+        incrementStep = 1;
+
+        defaultDescription = "bla bla bla bla cośtam opis
+                              taki normalnie jak w książce, docelowo do umieszczenia w\
+                              osobnym zbiorze tekstów pod odpowiednim kluczem";               
+        shortDescription = "No, odporność.";
+    }
+    //TODO: reszta podstawowych statystyk i sensowne treści w tych istniejących jak już będzie wiadomo
+
+    //teraz uwaga, zdefiniujemy hp
+    character base container statistic health "Zdrowie" alias hp, zdr
+    {
+        lowerBound = 0;
+
+        //no i pierwsza zależność:
+        //interpreter wykryje, że odp jest tu użyte i pokaże:
+        //przy odporności - że ma wpływ na zdrowie i daje obecnie X zdrowia
+        //przy zdrowiu - że wzięło się z odp i ile go się wzięło
+        upperBound = 10 + floor(odp/2);
+
+        //i jakoś ogarniamy eventy czy coś związane ze stanem zdrowia
+        //TODO: ogarnąć eventy
+    }
+}
+
+//i tak zdefiniowane zostały podstawowe statystyki,
+//które definiują praktycznie każdy byt myślący lub dziki w tym systemie
+//(nie definiują kamienia i tłuczka, nie)
+//w każdym razie, są na każdej karcie postaci - wroga, npca, czy gracza

@@ -1,0 +1,74 @@
+//oto jest skrypt heckowy, który definiuje pierwszy aspekt z basicTropes
+
+namespace basicTropes
+{
+    //aspekt to taki zbiór rzeczy, które wzbogacają definicję postaci ponad podstawowe statystyki
+    //elementy aspektu generalnie jakoś trzymają się jego tematyki
+    aspect "Tough mofo"
+    {
+        //obecność aspektu "Tough mofo" oznacza dodanie nowej statystyki do podstawowych
+        //statystyka taka będzie dopisana do karty postaci
+        player statistic int "Zajebistość" alias zajebistosc, zaj, badassitude, badass
+        {
+            startBaseValue = 0;
+            minBaseValue = 0;
+            
+            //wbudowany modyfikator zależny od statystyk
+            valueModifier = {+ min(max(siła,odporność),charyzma)}); 
+            
+            //w karcie postaci wartość zajebistości to będzie baza+wzorek wyżej
+            //gdzie bazę można rozwijać za expa
+
+            incrementCost = 100;
+            incrementStep = 1;            
+
+            //pola opcjonalne, może być default i brak klucza, może być klucz i brak defaulta
+            descriptionKey = "TM_Zaje";
+            defaultDescription = "\
+                Stopień zajebistości, wyznaczany asdf asdf książkowy opis\
+                taki normalnie jak w książce, docelowo do umieszczenia w\
+                osobnym zbiorze tekstów pod kluczem z descriptionKey";               
+            shortDescription = "Wypadkowa X i Y, z której skalują się rzeczy z tego aspektu";
+        }
+
+        //tu definiujemy pasywę
+        passive "Plot armor"
+        {            
+            //{expr} pozwala wstawić wartość wyrażenia w {}
+            //[[tekst::ID]] pozwala podlinkować do jakiejś definicji, jak linki w wikipedii
+            defaultDescription = "Bonus do armora o 1 za każde {zaj_scaling} [[zajebistości::zaj]]";
+            //zauważmy, że zajebistość jest obiektem
+            //który generalnie w różnych kontekstach jest traktowany jako swoja wartość
+            //ale możemy aliasu na nią użyć jako podlinkowanie wikipediowe
+
+            //zwiększa statystykę armor (zdefiniowaną gdzieś tam jako podstawowa nierozwijalna czy coś),
+            //o badassitude * badass_scaling, zaokrąglone w dół
+            +(roundDown(badassitude * badass_scaling)) armor;
+            
+            descriptionKey = "TM_PlotArm";
+            
+            //public udostępni edycję wartości w UI do łatwego
+            //rebalansu at runtime jak ktoś by chciał, why not
+            new public float badass_scaling = 1; 
+
+        }
+        active "Będziesz błagał o śmierć"
+        {
+            
+        }
+    }
+}
+
+//możliwe, że tworząc postać brakuje Ci skilla w jakimś aspekcie
+//są na to dwie opcje
+
+//pierwsza - zmoduj, dodaj skill do aspektu (do zrobienia z UI  też)
+basicTropes.aspects[”Tough mofo”].Add(
+    item “Chłopaki nie płaczą”
+        {
+            +scaling armor;
+            public int scaling = 1;
+            defaultDescription = "Historii tego swetra i tak byś nie zrozumiał. +1 do {odporności::odp},\
+                                  na wszystko."
+        };
+
