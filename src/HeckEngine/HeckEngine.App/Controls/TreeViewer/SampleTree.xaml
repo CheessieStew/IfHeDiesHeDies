@@ -1,0 +1,13 @@
+﻿<m:SimpleTreeNode 
+    xmlns:m="clr-namespace:HeckEngine.App.Controls.TreeViewer">
+    <m:SimpleTreeNode.Element>
+        <m:TreeLabel Description="Desc" Index="1" Name="adfs"/>
+    </m:SimpleTreeNode.Element>
+    <m:SimpleTreeNode.Children>
+        <m:SimpleTreeNode>
+            <m:SimpleTreeNode.Element>
+                <m:TreeLabel Description="Desc" Index="1" Name="adfs"/>
+            </m:SimpleTreeNode.Element>
+        </m:SimpleTreeNode>
+    </m:SimpleTreeNode.Children>
+</m:SimpleTreeNode>

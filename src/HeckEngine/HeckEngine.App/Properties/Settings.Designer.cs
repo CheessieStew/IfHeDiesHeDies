@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TreePainter.Properties
+namespace HeckEngine.App.Properties
 {
 
 

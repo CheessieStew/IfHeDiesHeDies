@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BEBF2892-9D68-456C-8954-8B5B5B773639}</ProjectGuid>
+    <ProjectGuid>{BDB1F0C9-7A64-4972-9F26-2FC70107BE64}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>TreePainter</RootNamespace>
-    <AssemblyName>TreePainter</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <RootNamespace>HeckEngine.App</RootNamespace>
+    <AssemblyName>HeckEngine.App</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -52,7 +52,19 @@
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <DesignData Include="Controls\TreeViewer\SampleTree.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
+    <Page Include="Controls\TreeViewer\NodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TreeViewer\SuperTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -60,6 +72,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeViewer\NodeView.xaml.cs">
+      <DependentUpon>NodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TreeViewer\TreeNode.cs" />
+    <Compile Include="Controls\TreeViewer\SuperTreeView.xaml.cs">
+      <DependentUpon>SuperTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
