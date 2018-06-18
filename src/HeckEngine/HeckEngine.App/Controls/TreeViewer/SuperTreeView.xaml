@@ -4,10 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HeckEngine.App.Controls.TreeViewer"
+             xmlns:design="clr-namespace:HeckEngine.App.Controls.TreeViewer.Design"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <local:NodeView DataContext="{Binding Tree}"/>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Design.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="white">
+        <local:NodeView x:Name="Node" DataContext="{Binding Tree}"
+                        d:DataContext="{d:DesignInstance Type=design:DesignTreeLabel, IsDesignTimeCreatable=True}"
+                        Width="1000"
+                        ChildIndent="150"
+                        DescriptionTemplate="{StaticResource DesignNodeTemplate}">
+        </local:NodeView>
     </Grid>
 </UserControl>

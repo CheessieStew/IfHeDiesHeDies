@@ -4,17 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HeckEngine.App.Controls.TreeViewer"
+             xmlns:design="clr-namespace:HeckEngine.App.Controls.TreeViewer.Design"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=design:DesignTreeLabel, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <Label Content="{Binding Name}" FontStyle="Oblique"/>
-        <Label Content="{Binding Description}"/>
-        <ListView ItemsSource="{Binding Children}">
-            <ListView.ItemTemplate>
+
+
+    
+    <Expander Name="Exp" Expanded="Exp_Expanded" DataContext="{Binding}" HorizontalAlignment="Stretch" Background="White">
+        <Expander.Header>
+            <ContentControl DataContext="{Binding}" Template="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeView}}, Path=DescriptionTemplate}"/>
+        </Expander.Header>
+                
+        <ListBox HorizontalContentAlignment="Stretch" Name="Children" HorizontalAlignment="Stretch" ItemsSource="{Binding Children}">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <local:NodeView DataContext="{Binding}"/>
+                    <local:NodeView HorizontalContentAlignment="Stretch" DataContext="{Binding}"
+                                    ChildIndent ="{Binding RelativeSource={RelativeSource Self}, Path=ChildIndent}"
+                                    Margin="{Binding RelativeSource={RelativeSource Self}, Path=ChildMargin}"
+                                    DescriptionTemplate="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeView}}, Path=DescriptionTemplate }"/>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackPanel>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        </Expander>
 </UserControl>

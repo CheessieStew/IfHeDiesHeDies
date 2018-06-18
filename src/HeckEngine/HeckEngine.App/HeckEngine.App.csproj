@@ -54,9 +54,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <DesignData Include="Controls\TreeViewer\SampleTree.xaml">
+    <Page Include="Controls\CharacterView\CharacterSheetView.xaml">
       <SubType>Designer</SubType>
-    </DesignData>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CharacterView\Template.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TreeViewer\Design.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\TreeViewer\NodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -73,10 +82,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Character\Design\DesignCharacterSheet.cs" />
+    <Compile Include="Controls\CharacterView\CharacterSheetView.xaml.cs">
+      <DependentUpon>CharacterSheetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CharacterView\Design.cs" />
+    <Compile Include="Controls\TreeViewer\Design.cs" />
+    <Compile Include="Controls\TreeViewer\ITreeLabel.cs" />
     <Compile Include="Controls\TreeViewer\NodeView.xaml.cs">
       <DependentUpon>NodeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TreeViewer\TreeNode.cs" />
     <Compile Include="Controls\TreeViewer\SuperTreeView.xaml.cs">
       <DependentUpon>SuperTreeView.xaml</DependentUpon>
     </Compile>
@@ -110,6 +125,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HeckEngine.Core\HeckEngine.Core.csproj">
+      <Project>{e1722462-82ae-4739-8a6d-4aab449f8377}</Project>
+      <Name>HeckEngine.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

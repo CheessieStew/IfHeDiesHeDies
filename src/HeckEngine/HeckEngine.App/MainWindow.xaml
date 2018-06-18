@@ -5,9 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HeckEngine.App"
         xmlns:treeviewer="clr-namespace:HeckEngine.App.Controls.TreeViewer"
+        xmlns:CharacterView="clr-namespace:HeckEngine.App.Controls.CharacterView"
+
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <treeviewer:SuperTreeView></treeviewer:SuperTreeView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <treeviewer:SuperTreeView Grid.Row="0"/>
+        <CharacterView:CharacterSheetView Grid.Row="1"/>
+
     </Grid>
 </Window>

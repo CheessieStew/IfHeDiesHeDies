@@ -1,90 +1,89 @@
-//oto skrypt heckowy, który deklaruje kilka podstawowych elementów systemu
-//generalnie, większość podstawowych rzeczy zdefiniowanych jest poza heckiem
-//np. schematy przebiegu walk etc.
-//tutaj piszemy głównie parametryzacje postaci, skille i takie tam
-
-//jest to język definiowania obiektów, w gruncie rzeczy
-//obiektów, które umieją liczyć, lub wskazać czytelnikowi UI-a na sąsiada w grafie zależności
-
-//no i jakoś się powinno dać wygenerować podręcznik z opisów i wzorów w tych skryptach
-//ale to na razie olał
+//Heck is an RPG system that defines some mechanics and no content whatsoever.
+//This is the first script in the default package that defines content and makes Heck an actual system.
 
 
-//najpierw otwórzmy namespace
-//jego nazwa z punktu widzenia kodu to heck, ale do tego ma domyślny tytuł (do zmiany w lang packu czy coś)
-namespace heck "Najbardziej core jak się da"
+//Heck scripting language allows us to define the content of our RPG system. The language's keywords are concepts of the basic system.
+//We need to create stuff like health and so on, using stuff defined by the language.
+
+package heck.core
 {
-    //teraz piszemy dział "Najbardziej core jak się da" podręcznika
-    //i coś takiego powiedzmy:
-    defaultSummary = "wstęp do rozdziału czy coś"
-
-    //różne elementy systemu deklaruje się odpowiednimi keywordami
-
-    //tu definiujemy statystykę "zręczność", którą posiadać będą wszystkie postaci
-    //jej nazwa z punktu widzenia kodu to agility, ale do tego ma domyślną nazwę podręcznikową
-    character base statistic agility "Zręczność" alias zrecznosc, zr, ag
+	//a package has some things that we can set, like...
+    description = "Core of the default package"
+	//in fact, each time you do stuff like
+	//keyword keyword something
+	//{
+	//	you will have things to set here, because you've just defined a thing, and that thing has some fields
+	//}
+	
+    //okay, so a base statistc is something that every character sheet has
+    
+    new base statistic strength "Strength"
     {
-        //te wszystkie rzeczy to jakby pola klasy "statistic", której instancję definiujemy
-        //to, jakie pola ma ta klasa definiuje język, my je tu tylko wypełniamy
+        //we've added a statistc to the character sheet, yay
+		//since sometimes literal names would be inconveniently long to use in code, we provide two
+		//the statistc is named strength and it's display name is "Strength"
         
-        minBaseValue = 0;
-        startBaseValue = 5;
+        minimum = 0;
+        maximum = 100;
+		base = 20;
         incrementCost = 100;
-        incrementStep = 1;
-                
-        //defaultowe opisy/summary są opcjonalne, będzie można je definiować pod odpowiednimi kluczami w osobnym pliku
-        defaultDescription = "bla bla bla bla cośtam opis\
-                              taki normalnie jak w książce, docelowo do umieszczenia w\
-                              osobnym zbiorze tekstów pod odpowiednim kluczem";               
-        shortDescription = "No, zręczność.";
+        incrementStep = 5;
+		
+		//hey, strength is now a thing. You have 20 by default and can increase it by 5 by spending 100 exp
+		
+        description = "Basically the source of damage for a lot of stuff"
     }
-
-    //podobnie definiujemy inne statystyki
-    //tu może wspomnę o pomyśle na aliasy - można potem gdzieś napisać:
-    //add alias strength fuerza
-    //i dodać alias hiszpański jakby ktoś chciał pisać mody po hiszpańsku :D
-
-    character base statistic strength "Siła" alias sila, s
+	
+    new base statistic spirit "Spirit"
     {
-        minBaseValue = 0;
-        startBaseValue = 5;
+        minimum = 0;
+        maximum = 100;
+		base = 20;
         incrementCost = 100;
-        incrementStep = 1;        
+        incrementStep = 5;     
         
-        defaultDescription = "bla bla bla bla cośtam opis\
-                              taki normalnie jak w książce, docelowo do umieszczenia w\
-                              osobnym zbiorze tekstów pod odpowiednim kluczem";               
-        shortDescription = "No, siła.";
+        description = "The source of strength for some magic skills represents the character's strength of a not so somatic kind"
     }
 
-    character base statistic toughness "Odporność" alias t, odp
-    {
-        minBaseValue = 0;
-        startBaseValue = 5;
+	new base statistic vitality "Vitality"
+	{
+	
+        minimum = 0;
+        maximum = 100;
+		base = 20;
         incrementCost = 100;
-        incrementStep = 1;
-
-        defaultDescription = "bla bla bla bla cośtam opis
-                              taki normalnie jak w książce, docelowo do umieszczenia w\
-                              osobnym zbiorze tekstów pod odpowiednim kluczem";               
-        shortDescription = "No, odporność.";
-    }
-    //TODO: reszta podstawowych statystyk i sensowne treści w tych istniejących jak już będzie wiadomo
-
-    //teraz uwaga, zdefiniujemy hp
-    character base container statistic health "Zdrowie" alias hp, zdr
+        incrementStep = 5;     
+        
+        description = "The ammount of flesh there is to cut"
+		
+	}
+	
+    new base statistic toughness "Toughness"
     {
-        lowerBound = 0;
+		minimum = 0;
+        maximum = 100;
+		base = 20;
+        incrementCost = 100;
+        incrementStep = 5;     
 
-        //no i pierwsza zależność:
-        //interpreter wykryje, że odp jest tu użyte i pokaże:
-        //przy odporności - że ma wpływ na zdrowie i daje obecnie X zdrowia
-        //przy zdrowiu - że wzięło się z odp i ile go się wzięło
-        upperBound = 10 + floor(odp/2);
-
-        //i jakoś ogarniamy eventy czy coś związane ze stanem zdrowia
-        //TODO: ogarnąć eventy
+        description = "The source of physical resistance";          
     }
+	
+	
+    //now it's time for health
+    new base container statistic health "Health" alias hp
+    {
+        minimum = 0;
+		maximum = 100 + floor(sqrt(Vitality*100)) //not sure if I really want this formula
+        //the ui will show that Vitality affects Health and that Health is affected by vitality, even showing the contribution
+    }
+	
+	new damage type physical "Physical" {}
+	
+	onHit(damage) 
+	{
+		character.health -= damage.physical 
+	}
 }
 
 //i tak zdefiniowane zostały podstawowe statystyki,

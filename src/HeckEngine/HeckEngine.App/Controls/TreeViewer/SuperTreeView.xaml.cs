@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HeckEngine.App.Controls.TreeViewer.Design;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,34 +17,15 @@ using System.Windows.Shapes;
 
 namespace HeckEngine.App.Controls.TreeViewer
 {
-    /// <summary>
-    /// Interaction logic for TreeView.xaml
-    /// </summary>
+
     public partial class SuperTreeView : UserControl
     {
-        public SimpleTreeNode Tree { get; private set; } 
-            = new SimpleTreeNode(
-                new TreeLabel()
-                {
-                    Name = "asdf",
-                    Description = "fdsa"
-                }
-            );
+        public DesignTreeLabel Tree { get; private set; }
+            = new DesignTreeLabel();
         public SuperTreeView()
-        {
-            Tree.Add(new SimpleTreeNode(
-                new TreeLabel()
-                {
-                    Name = "asdf",
-                    Description = "fdsa"
-                }));
-            Tree.Add(new SimpleTreeNode(
-                new TreeLabel()
-                {
-                    Name = "asdf",
-                    Description = "fdsa"
-                }));
+        {            
             InitializeComponent();
         }
     }
+
 }
